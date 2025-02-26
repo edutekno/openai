@@ -14,12 +14,11 @@ openai.api_key = OPENAI_API_KEY
 openai.api_base = BASE_URL
 
 # Judul aplikasi
-st.title("Chatbot GROQ")
+st.title("GroqChatbots")
 
 # Deskripsi aplikasi
 st.write("""
-    Selamat datang di aplikasi chatbot berbasis AI! 
-    Silakan ajukan pertanyaan Anda, dan AI akan memberikan jawaban terbaik.
+    Aplikasi chatbot berbasis AI!
 """)
 
 # Input pengguna untuk parameter opsional
