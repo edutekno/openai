@@ -23,7 +23,7 @@ st.write("""
 """)
 
 # Input pengguna untuk parameter opsional
-st.sidebar.header("Pengaturan")
+#st.sidebar.header("Pengaturan")
 selected_model = st.sidebar.selectbox("Pilih Model", ["gemma2-9b-it", "llama3-70b-8192"])
 max_tokens = st.sidebar.slider("Batas Panjang Jawaban (Tokens)", 50, 500, MAX_TOKENS)
 temperature = st.sidebar.slider("Tingkat Kreativitas (Temperature)", 0.0, 1.0, TEMPERATURE, 0.1)
@@ -69,7 +69,7 @@ for message in st.session_state['chat_history']:
             unsafe_allow_html=True
         )
 
-# Kotak input teks di bagian bawah layar (floating)
+# CSS untuk membuat input dan tombol tetap di bagian bawah
 st.markdown(
     """
     <style>
@@ -83,33 +83,52 @@ st.markdown(
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
     }
+    .stButton button {
+        width: 100%;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# Input teks di bagian bawah
+# JavaScript untuk menangani event tombol Enter
+st.markdown(
+    """
+    <script>
+    function handleEnter(event) {
+        if (event.key === "Enter") {
+            document.querySelector("button[title='Kirim']").click();
+        }
+    }
+    document.addEventListener("keydown", handleEnter);
+    </script>
+    """,
+    unsafe_allow_html=True
+)
+
+# Kotak input dan tombol kirim di bagian bawah layar
 with st.container():
     st.markdown('<div class="fixed-bottom">', unsafe_allow_html=True)
-    user_question = st.text_input("Pertanyaan Anda:", key="input", placeholder="Ketik pertanyaan Anda di sini...", label_visibility="collapsed")
+    col1, col2 = st.columns([4, 1])  # Membagi layout menjadi 2 kolom
+    with col1:
+        user_question = st.text_input("Pertanyaan Anda:", key="input", placeholder="Ketik pertanyaan Anda di sini...", label_visibility="collapsed")
+    with col2:
+        if st.button("Kirim"):
+            if user_question.strip() != "":
+                # Tambahkan pertanyaan pengguna ke history
+                st.session_state['chat_history'].append({"role": "user", "content": user_question})
+
+                # Batasi history sesuai dengan max_history (FIFO)
+                if len(st.session_state['chat_history']) > max_history * 2:  # *2 karena ada pesan user dan AI
+                    st.session_state['chat_history'] = st.session_state['chat_history'][-max_history * 2:]
+
+                # Dapatkan jawaban dari AI dengan mengirimkan history sebagai konteks
+                with st.spinner("Memproses jawaban..."):
+                    ai_response = get_ai_response(st.session_state['chat_history'], selected_model, max_tokens, temperature)
+
+                # Tambahkan jawaban AI ke history
+                st.session_state['chat_history'].append({"role": "assistant", "content": ai_response})
+
+                # Refresh halaman untuk menampilkan pesan terbaru
+                st.experimental_rerun()
     st.markdown('</div>', unsafe_allow_html=True)
-
-# Tombol untuk mengirim pertanyaan
-if user_question.strip() != "":
-    if st.button("Kirim"):
-        # Tambahkan pertanyaan pengguna ke history
-        st.session_state['chat_history'].append({"role": "user", "content": user_question})
-
-        # Batasi history sesuai dengan max_history (FIFO)
-        if len(st.session_state['chat_history']) > max_history * 2:  # *2 karena ada pesan user dan AI
-            st.session_state['chat_history'] = st.session_state['chat_history'][-max_history * 2:]
-
-        # Dapatkan jawaban dari AI dengan mengirimkan history sebagai konteks
-        with st.spinner("Memproses jawaban..."):
-            ai_response = get_ai_response(st.session_state['chat_history'], selected_model, max_tokens, temperature)
-
-        # Tambahkan jawaban AI ke history
-        st.session_state['chat_history'].append({"role": "assistant", "content": ai_response})
-
-        # Refresh halaman untuk menampilkan pesan terbaru
-        st.experimental_rerun()
