@@ -50,7 +50,7 @@ def get_ai_response(messages, model, max_tokens, temperature):
         return f"Error: {str(e)}"
 
 # Tampilkan history percakapan
-st.write("### Percakapan")
+#st.write("### Percakapan")
 for message in st.session_state['chat_history']:
     if message["role"] == "user":
         # Tampilkan pesan pengguna dengan background biru
