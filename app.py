@@ -1,10 +1,11 @@
 import streamlit as st
 import openai
 
-OPENAI_API_KEY=st.secrets["GROQ_API_KEY"]
-BASE_URL = "https://api.groq.com/openai/v1"  # Default base URL OpenAI
+OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
+#BASE_URL = "https://api.groq.com/openai/v1"  # Default base URL OpenAI
+BASE_URL = "https://api.openai.com/v1"  # Default base URL OpenAI
 #BASE_URL="https://openrouter.ai/api/v1"
-MODEL = "gemma2-9b-it"  # Model default
+MODEL = "gpt-3.5-turbo"  # Model default
 MAX_TOKENS = 150  # Batas panjang jawaban
 TEMPERATURE = 0.7  # Tingkat kreativitas (0.0 - 1.0)
 
@@ -23,7 +24,7 @@ st.write("""
 
 # Input pengguna untuk parameter opsional
 st.sidebar.header("Pengaturan")
-selected_model = st.sidebar.selectbox("Pilih Model", ["gemma2-9b-it", "llama3-70b-8192"])
+selected_model = st.sidebar.selectbox("Pilih Model", ["gpt-3.5-turbo", "gpt-3.5-turbo"])
 max_tokens = st.sidebar.slider("Batas Panjang Jawaban (Tokens)", 50, 500, MAX_TOKENS)
 temperature = st.sidebar.slider("Tingkat Kreativitas (Temperature)", 0.0, 1.0, TEMPERATURE, 0.1)
 
