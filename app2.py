@@ -14,7 +14,7 @@ openai.api_key = OPENAI_API_KEY
 openai.api_base = BASE_URL
 
 # Judul aplikasi
-st.title("Aplikasi FAQ dengan AI")
+st.title("Aplikasi FAQ dengan GROQ")
 
 # Deskripsi aplikasi
 st.write("""
@@ -24,7 +24,7 @@ st.write("""
 
 # Input pengguna untuk parameter opsional
 st.sidebar.header("Pengaturan")
-selected_model = st.sidebar.selectbox("Pilih Model", ["gemma2-9b-it", "gemma2-9b-it"])
+selected_model = st.sidebar.selectbox("Pilih Model", ["gemma2-9b-it", "llama3-70b-8192"])
 max_tokens = st.sidebar.slider("Batas Panjang Jawaban (Tokens)", 50, 500, MAX_TOKENS)
 temperature = st.sidebar.slider("Tingkat Kreativitas (Temperature)", 0.0, 1.0, TEMPERATURE, 0.1)
 
