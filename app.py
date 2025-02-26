@@ -2,6 +2,7 @@ import streamlit as st
 import openai
 from config import OPENAI_API_KEY, BASE_URL, MODEL, MAX_TOKENS, TEMPERATURE
 
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
 BASE_URL = "https://api.openai.com/v1"  # Default base URL OpenAI
 MODEL = "gpt-3.5-turbo"  # Model default
 MAX_TOKENS = 150  # Batas panjang jawaban
