@@ -1,7 +1,7 @@
 import streamlit as st
 import openai
 
-OPENAI_API_KEY=st.secrets["OPENAI_API_KEY"]
+OPENAI_API_KEY=st.secrets["GROQ_API_KEY"]
 BASE_URL = "https://api.groq.com/openai/v1"  # Default base URL OpenAI
 #BASE_URL="https://openrouter.ai/api/v1"
 MODEL = "gemma2-9b-it"  # Model default
