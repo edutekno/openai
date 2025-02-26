@@ -1,5 +1,9 @@
 import streamlit as st
 import openai
+import os
+
+#environment = os.environ.get('NODE_ENV')
+
 
 # Konfigurasi API
 OPENAI_API_KEY = st.secrets["GROQ_API_KEY"]
