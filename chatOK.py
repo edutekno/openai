@@ -4,7 +4,8 @@ import openai
 # Konfigurasi API
 OPENAI_API_KEY = st.secrets["GROQ_API_KEY"]
 BASE_URL = "https://api.groq.com/openai/v1/chat/completions"  # Default base URL OpenAI
-CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1"  # 
+#CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1"  #
+CHAT_COMPLETIONS_URL = "https://rumahguru.org/api"  # 
 MODEL = "gemma2-9b-it"  # Model default
 MAX_TOKENS = 150  # Batas panjang jawaban
 TEMPERATURE = 0.7  # Tingkat kreativitas (0.0 - 1.0)
@@ -23,7 +24,7 @@ st.write("""
 """)
 
 # Input pengguna untuk parameter opsional
-#st.sidebar.header("Pengaturan")
+#st.sidebar.header("Pengaturan LLM")
 selected_model = st.sidebar.selectbox("Pilih Model", ["gemma2-9b-it", "llama3-70b-8192"])
 max_tokens = st.sidebar.slider("Batas Panjang Jawaban (Tokens)", 50, 500, MAX_TOKENS)
 temperature = st.sidebar.slider("Tingkat Kreativitas (Temperature)", 0.0, 1.0, TEMPERATURE, 0.1)
